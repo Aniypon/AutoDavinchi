@@ -1,0 +1,22 @@
+{
+  "forms": {
+    "age": {
+      "min_age": 16,
+      "max_age": 18,
+      "check_age_in_text": true
+    },
+    "about_text": {
+      "minimal_text_size": 65,
+      "skip_empty_texts": true
+    }
+  },
+  "telegram": {
+    "api_id": "12345",
+    "api_hash": "abcabcabcabcabcabcabc",
+    "delay_between_requests": 2
+  },
+  "notify": {
+    "move_on_top": false,
+    "send_notify": false
+  }
+}

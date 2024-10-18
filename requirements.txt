@@ -1,0 +1,4 @@
+loguru
+win10toast
+Telethon
+emoji
