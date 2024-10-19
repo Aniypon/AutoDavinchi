@@ -44,55 +44,55 @@ async def worker_cycle(self):
     while True:
         time.sleep(self.config["telegram"]["delay_between_requests"])
 
-        #try:
-        msg = await wait_bot_response(self)
+        try:
+            msg = await wait_bot_response(self)
 
-        # Чекаем рекламу
-        is_promo, reply = check_promoting(self, msg)
-        if is_promo:
-            logger.warning(f"Скип рекламы - {msg}")
-            await send_reply(self, reply)
-            continue
+            # Чекаем рекламу
+            is_promo, reply = check_promoting(self, msg)
+            if is_promo:
+                logger.warning(f"Скип рекламы - {msg}")
+                await send_reply(self, reply)
+                continue
 
-        self.all_forms += 1
-        await update_stat(self)
+            self.all_forms += 1
+            await update_stat(self)
 
-        # Парсим анкету
-        form = parse_form(msg)
-        form_string = f"{form.name} | {form.age}{f" | {form.about}" if form.about != "" else ""}" # <3.11 пайтон сосатьб
+            # Парсим анкету
+            form = parse_form(msg)
+            form_string = f"{form.name} | {form.age}{f" | {form.about}" if form.about != "" else ""}"  # <3.11 пайтон сосатьб
 
-        # Возраст
-        age, good = check_age(self, form.age, form.about)
-        if not good:
-            logger.error(f"Скип анкеты - Возраст - {age} | {form_string}")
+            # Возраст
+            age, good = check_age(self, form.age, form.about)
+            if not good:
+                logger.error(f"Скип анкеты - Возраст - {age} | {form_string}")
+                await skip_form(self)
+                self.skipped_forms += 1
+                continue
+
+            # Длина о себе
+            about_len, good = check_about_len(self, form.about)
+            if not good:
+                logger.error(f"Скип анкеты - Длина описания - {about_len} символов | {form_string}")
+                await skip_form(self)
+                self.skipped_forms += 1
+                continue
+
+            # Банворды
+            banword, good = check_about_banwords(self, form.about)
+            if not good:
+                logger.error(f"Скип анкеты - Банворд в описание - {banword} | {form_string}")
+                await skip_form(self)
+                self.skipped_forms += 1
+                continue
+
+            self.suitable_forms += 1
+            notify(self)
+            await show_form(self, form)
+
+        except Exception as e:
+            logger.error(f"Ошибка парсинга анкеты: {msg} - {e}")
             await skip_form(self)
-            self.skipped_forms += 1
             continue
-
-        # Длина о себе
-        about_len, good = check_about_len(self, form.about)
-        if not good:
-            logger.error(f"Скип анкеты - Длина описания - {about_len} символов | {form_string}")
-            await skip_form(self)
-            self.skipped_forms += 1
-            continue
-
-        # Банворды
-        banword, good = check_about_banwords(self, form.about)
-        if not good:
-            logger.error(f"Скип анкеты - Банворд в описание - {banword} | {form_string}")
-            await skip_form(self)
-            self.skipped_forms += 1
-            continue
-
-        self.suitable_forms += 1
-        notify(self)
-        await show_form(self, form)
-
-        #except Exception as e:
-        #    logger.error(f"Ошибка парсинга анкеты: {msg} - {e}")
-        #    await skip_form(self)
-        #    continue
 
 
 class Form:
