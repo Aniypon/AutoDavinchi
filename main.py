@@ -10,9 +10,9 @@ async def main():
 
 
 if __name__ == '__main__':
-    try:
-        setup_logger()
-        asyncio.run(main())
-    except Exception as e:
-        input(f"Глобальная ошибка: {e}")
-        sys.exit()
+    #try:
+    setup_logger()
+    asyncio.run(main())
+    #except Exception as e:
+    #    input(f"Глобальная ошибка: {e}")
+    #    sys.exit()

@@ -11,43 +11,47 @@ def check_promoting(self, text) -> (bool, str):
         parsed = promoting.split("|")
         searched, reply = parsed[0], parsed[1]
         if searched in text:
-            return True, promoting
+            return True, reply
 
     return False, ""
 
 
 def check_age(self, age, text) -> (str, bool):
     """
-    Бекаем True если не подходит
+    Бекаем False если не подходит
     """
-    if self.config["forms"]["age"]["min_age"] > int(age) > self.config["forms"]["age"]["min_age"]:
-        return age, True
+
+    min_age = self.config["forms"]["age"]["min_age"]
+    max_age = self.config["forms"]["age"]["max_age"]
+
+    if int(age) < min_age or int(age) > max_age:
+        return age, False
 
     if self.config["forms"]["age"]["check_age_in_text"]:
         sub_age = re.findall(r'\d{2}', text)  # Ну тут сам головой думай с регуляркой
-        if len(sub_age) > 0 and self.config["forms"]["age"]["min_age"] > int(sub_age[0]) > self.config["forms"]["age"]["min_age"]:
-            return f"Возраст в тесте - {sub_age}", True
+        if len(sub_age) != 0:
+            sub_age = int(sub_age[0])
+            if sub_age < min_age or sub_age > max_age:
+                return f"Возраст в тексте - {sub_age}", False
 
-    return 0, False
+    return age, True
 
 
 def check_about_len(self, text) -> (str, bool):
     """
-    Бекаем True если не подходит
+    Бекаем False если не подходит
     """
-    length = len(text)
-    print(length)
-    print(self.config["forms"]["about_text"]["skip_empty_texts"])
-    print(self.config["forms"]["about_text"]["minimal_text_size"])
-    if self.config["forms"]["about_text"]["skip_empty_texts"]:
-        return str(length), length == 0
 
-    return str(length), length < self.config["forms"]["about_text"]["minimal_text_size"]
+    length = len(text)
+    if self.config["forms"]["about_text"]["skip_empty_texts"] and length == 0:
+        return "0", False
+
+    return str(length), length >= self.config["forms"]["about_text"]["minimal_text_size"]
 
 
 def check_about_banwords(self, text) -> (str, bool):
     """
-    Бекаем True если не подходит
+    Бекаем False если не подходит
     """
 
     if text == "":
@@ -56,6 +60,6 @@ def check_about_banwords(self, text) -> (str, bool):
     text = text.lower()
     for banword in self.banwords:
         if banword in text:
-            return banword, True
+            return banword, False
 
-    return "", False
+    return "", True
