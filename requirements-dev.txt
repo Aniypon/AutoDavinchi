@@ -1,0 +1,6 @@
+loguru
+win10toast
+Telethon
+emoji
+asyncio
+pyinstaller
