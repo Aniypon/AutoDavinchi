@@ -14,5 +14,5 @@ if __name__ == '__main__':
         setup_logger()
         asyncio.run(main())
     except Exception as e:
-        input(f"Глобальная ошибка: {e}")
+        print(f"Глобальная ошибка: {e}")
         sys.exit()

@@ -1,22 +1,30 @@
 {
-  "forms": {
-    "age": {
-      "min_age": 16,
-      "max_age": 18,
-      "check_age_in_text": true
+  "work_mode": "parse",
+  "parse": {
+    "save_dir": "./forms"
+  },
+  "search": {
+    "forms": {
+      "age": {
+        "min_age": 18,
+        "max_age": 20,
+        "check_age_in_text": true
+      },
+      "about_text": {
+        "minimal_text_size": 10,
+        "skip_empty_texts": true
+      },
+      "notify": {
+        "move_on_top": false
+      }
     },
-    "about_text": {
-      "minimal_text_size": 65,
-      "skip_empty_texts": true
-    }
+    "allow_save": true,
+    "allow_exit": true,
+    "save_media": true
   },
   "telegram": {
-    "api_id": "12345",
-    "api_hash": "abcabcabcabcabcabcabc",
-    "delay_between_requests": 1
-  },
-  "notify": {
-    "move_on_top": false,
-    "send_notify": false
+    "api_id": "123",
+    "api_hash": "abcde",
+    "delay_between_requests": 0.5
   }
 }

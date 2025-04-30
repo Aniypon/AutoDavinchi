@@ -5,6 +5,7 @@ from loguru import logger
 
 
 def read_file_to_list(path) -> list:
+    # Чтение списка из файла
     logger.info(f"Загрузка конфига из {path}")
     try:
         with open(path, mode="r", encoding="utf-8", errors="ignore") as f:
@@ -15,18 +16,18 @@ def read_file_to_list(path) -> list:
 
 
 def read_json(path) -> dict:
-    # Я ебу Алибабу валидируй головой сам
+    # Чтение JSON конфига
     logger.info(f"Загрузка конфига из {path}")
     try:
         with open(path, mode="r", encoding="utf-8", errors="ignore") as f:
             return json.load(f)
     except Exception as e:
         logger.exception(f"Ошибка загрузки конфига из {path}: {e}")
-        input()
         sys.exit()
 
 
 async def load_configs(self) -> None:
+    # Загрузка всех конфигов в объект
     self.banwords = read_file_to_list("configs/banwords.txt")
     self.promotings = read_file_to_list("configs/promotings.txt")
     self.config = read_json("configs/main_config.json")
