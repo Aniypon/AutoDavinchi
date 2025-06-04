@@ -2,16 +2,28 @@ import asyncio
 import sys
 
 import emoji
+import os
+import emoji
 from loguru import logger
 from telethon import TelegramClient
 from telethon.tl.types import MessageMediaDocument, MessageMediaPhoto
+from dotenv import load_dotenv
+
+# Загружаем переменные окружения
+load_dotenv()
 
 
 async def check_tg_account(self):
     # Авторизация в Telegram
     logger.info("Проверка аккаунта Telegram...")
     try:
-        self.client = TelegramClient('QueVinchik', api_id=self.config["telegram"]["api_id"], api_hash=self.config["telegram"]["api_hash"])
+        api_id = os.getenv('TELEGRAM_API_ID')
+        api_hash = os.getenv('TELEGRAM_API_HASH')
+        
+        if not api_id or not api_hash:
+            raise ValueError("TELEGRAM_API_ID и TELEGRAM_API_HASH должны быть установлены в .env файле")
+        
+        self.client = TelegramClient('QueVinchik', api_id=int(api_id), api_hash=api_hash)
         await self.client.start()
         logger.success("@" + (await self.client.get_me()).username)
         await self.client.send_message(self.bot_name, emoji.emojize(":thumbs_down:"))

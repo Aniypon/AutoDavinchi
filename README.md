@@ -24,8 +24,12 @@ pip install -r requirements.txt
 
 ### 2. Настройка конфигурации
 
-1. Откройте файл `configs/main_config.json`.
-2. Укажите свои данные Telegram API (`api_id`, `api_hash`).
+1. Создайте файл `.env` в корне проекта и заполните его:
+   ```
+   TELEGRAM_API_ID=ваш_api_id
+   TELEGRAM_API_HASH=ваш_api_hash
+   ```
+2. Откройте файл `configs/main_config.json`.
 3. Настройте параметры фильтрации:
    - `min_age`, `max_age` — возрастной диапазон
    - `minimal_text_size` — минимальная длина описания
@@ -45,8 +49,8 @@ python main.py
 
 - **work_mode**: `search` (поиск) или `parse` (парсинг и сохранение)
 - **telegram**:
-  - `api_id`, `api_hash` — ваши данные Telegram API
   - `delay_between_requests` — задержка между запросами (секунды)
+  - API данные теперь берутся из .env файла
 - **parse**:
   - `save_dir` — папка для сохранения анкет
 - **search**:

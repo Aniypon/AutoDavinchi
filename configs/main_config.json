@@ -1,5 +1,5 @@
 {
-  "work_mode": "parse",
+  "work_mode": "search",
   "parse": {
     "save_dir": "./forms"
   },
@@ -11,20 +11,18 @@
         "check_age_in_text": true
       },
       "about_text": {
-        "minimal_text_size": 10,
+        "minimal_text_size": 60,
         "skip_empty_texts": true
       },
       "notify": {
         "move_on_top": false
       }
     },
-    "allow_save": true,
+    "allow_save": false,
     "allow_exit": true,
     "save_media": true
   },
   "telegram": {
-    "api_id": "123",
-    "api_hash": "abcde",
     "delay_between_requests": 0.5
   }
 }

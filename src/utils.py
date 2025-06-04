@@ -6,6 +6,9 @@ import subprocess
 import sys
 import json
 
+import os
+import sys
+import hashlib
 from loguru import logger
 
 

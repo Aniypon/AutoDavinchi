@@ -1,5 +1,0 @@
-loguru
-Telethon
-emoji
-asyncio
-pyinstaller
