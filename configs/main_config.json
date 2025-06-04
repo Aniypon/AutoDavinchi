@@ -11,18 +11,23 @@
         "check_age_in_text": true
       },
       "about_text": {
-        "minimal_text_size": 60,
+        "minimal_text_size": 90,
         "skip_empty_texts": true
       },
       "notify": {
+        "enabled": true,
         "move_on_top": false
       }
+    },
+    "auto_continue": {
+      "enabled": true,
+      "monitor_user_actions": true
     },
     "allow_save": false,
     "allow_exit": true,
     "save_media": true
   },
   "telegram": {
-    "delay_between_requests": 0.5
+    "delay_between_requests": 0.1
   }
 }

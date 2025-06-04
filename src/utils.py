@@ -20,7 +20,7 @@ async def update_stat(self):
 
 
 def notify(self):
-    if self.config["search"]["notify"]["move_on_top"]:
+    if self.config["search"]["forms"]["notify"]["move_on_top"]:
         try:
             process = subprocess.Popen(["xdotool", "getactivewindow"], stdout=subprocess.PIPE)
             window_id, _ = process.communicate()

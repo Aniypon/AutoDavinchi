@@ -58,6 +58,9 @@ python main.py
   - `forms.about_text.minimal_text_size` — минимальная длина описания
   - `forms.about_text.skip_empty_texts` — пропускать пустые описания
   - `notify.move_on_top` — уведомления поверх окон
+  - `auto_continue.enabled` — автоматическое продолжение поиска
+  - `auto_continue.monitor_user_actions` — мониторинг действий пользователя
+  - `auto_continue.delay_after_action` — задержка после действия пользователя
   - `allow_save`, `allow_exit`, `save_media` — дополнительные опции
 
 ---
