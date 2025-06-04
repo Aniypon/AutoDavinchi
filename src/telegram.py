@@ -73,3 +73,44 @@ async def send_reply(self, text):
     text = text.capitalize()
     logger.info(f"Отправка ответа: {text}")
     await self.client.send_message(self.bot_name, text)
+
+
+async def wait_user_action(self):
+    """
+    Ожидание действия пользователя (лайк/дизлайк) в чате с ботом
+    Возвращает True если пользователь сделал лайк, False если дизлайк
+    """
+    # Получаем ID последнего сообщения перед началом ожидания
+    initial_messages = await self.client.get_messages(self.bot_name, limit=10)
+    last_msg_id = initial_messages[0].id if initial_messages else 0
+    
+    logger.info("Ожидание действия пользователя (лайк/дизлайк)...")
+    
+    while True:
+        await asyncio.sleep(0.5)
+        
+        # Получаем новые сообщения
+        messages = await self.client.get_messages(self.bot_name, limit=10)
+        
+        # Ищем новые сообщения от пользователя
+        for msg in messages:
+            # Пропускаем старые сообщения
+            if msg.id <= last_msg_id:
+                continue
+                
+            sender = await msg.get_sender()
+            me = await self.client.get_me()
+            
+            # Если сообщение от нас
+            if sender.id == me.id and msg.text:
+                # Проверяем эмодзи в сообщении
+                if "❤️" in msg.text:
+                    logger.success("Обнаружен лайк пользователя")
+                    return True
+                elif "👎" in msg.text:
+                    logger.info("Обнаружен дизлайк пользователя")
+                    return False
+                else:
+                    # Обновляем ID последнего сообщения для игнорирования служебных команд
+                    last_msg_id = msg.id
+                    continue
