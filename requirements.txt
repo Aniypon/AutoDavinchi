@@ -2,3 +2,4 @@ loguru
 Telethon
 emoji
 asyncio
+python-dotenv

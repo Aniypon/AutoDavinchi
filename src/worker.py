@@ -5,6 +5,8 @@ import re
 import string
 import sys
 
+import re
+import emoji
 from loguru import logger
 
 from src.configs import load_configs

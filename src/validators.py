@@ -1,6 +1,9 @@
 import re
 
 
+import re
+
+
 def check_promoting(self, text) -> tuple[bool, str]:
     """
     Возвращает True, если есть реклама
